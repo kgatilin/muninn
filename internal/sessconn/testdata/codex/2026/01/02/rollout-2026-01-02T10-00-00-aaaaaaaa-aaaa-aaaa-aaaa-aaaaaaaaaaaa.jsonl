@@ -1,0 +1,14 @@
+{"timestamp":"2026-01-02T10:00:00.000Z","type":"session_meta","payload":{"id":"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa","cwd":"/repo/app/.worktrees/APP-7-recover","source":"cli","base_instructions":"BASE INSTRUCTIONS","git":{"branch":"APP-7/recover"}}}
+{"timestamp":"2026-01-02T10:00:01.000Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"<environment_context>ENVIRONMENT</environment_context>"}]}}
+{"timestamp":"2026-01-02T10:00:02.000Z","type":"turn_context","payload":{"cwd":"/repo/app/.worktrees/APP-7-recover","turn_id":"t1"}}
+{"timestamp":"2026-01-02T10:00:03.000Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"fix the recovery"}]}}
+{"timestamp":"2026-01-02T10:00:03.500Z","type":"event_msg","payload":{"type":"user_message","message":"fix the recovery","images":[],"local_images":[],"text_elements":[]}}
+{"timestamp":"2026-01-02T10:00:04.000Z","type":"event_msg","payload":{"type":"agent_reasoning","text":"SECRET REASONING"}}
+{"timestamp":"2026-01-02T10:00:05.000Z","type":"event_msg","payload":{"type":"agent_message","message":"Looking at recover.go."}}
+{"timestamp":"2026-01-02T10:00:05.500Z","type":"response_item","payload":{"type":"message","role":"assistant","content":[{"type":"output_text","text":"Looking at recover.go."}]}}
+{"timestamp":"2026-01-02T10:00:06.000Z","type":"event_msg","payload":{"type":"exec_command_end","call_id":"c1","command":["cat","recover.go"],"aggregated_output":"TOOL OUTPUT","exit_code":0}}
+{"timestamp":"2026-01-02T10:00:07.000Z","type":"event_msg","payload":{"type":"patch_apply_end","call_id":"c2","success":true,"changes":{"/repo/app/.worktrees/APP-7-recover/recover.go":{"type":"update","unified_diff":"DIFF BODY","move_path":null},"old.go":{"type":"update","unified_diff":"","move_path":"/repo/app/.worktrees/APP-7-recover/new.go"}}}}
+{"timestamp":"2026-01-02T10:00:08.000Z","type":"event_msg","payload":{"type":"patch_apply_end","call_id":"c3","success":false,"changes":{"/repo/app/failed.go":{"type":"update","unified_diff":""}}}}
+{"timestamp":"2026-01-02T10:00:09.000Z","type":"event_msg","payload":{"type":"agent_message","message":"Fixed."}}
+{"timestamp":"2026-01-02T10:00:10.000Z","type":"event_msg","payload":{"type":"token_count","info":null}}
+{"timestamp":"2026-01-02T10:01:00.000Z","type":"event_msg","payload":{"type":"user_message","message":"thanks"}}

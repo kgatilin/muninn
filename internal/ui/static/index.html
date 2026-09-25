@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>muninn</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<aside id="left">
+  <header>
+    <span class="wordmark">muninn</span>
+    <select id="bank" aria-label="bank"></select>
+  </header>
+  <section id="around" hidden></section>
+  <section id="summary"></section>
+  <section id="usage"></section>
+  <form id="search" autocomplete="off">
+    <input id="q" type="search" placeholder="search this bank" aria-label="query">
+    <div class="row">
+      <label>k <input id="k" type="number" min="1" max="100" value="10"></label>
+      <label><input id="walk" type="checkbox" checked> graph walk</label>
+      <select id="hitkind" aria-label="kind"><option value="">any kind</option></select>
+      <button type="submit">search</button>
+    </div>
+  </form>
+  <div id="searchnote"></div>
+  <ol id="hits"></ol>
+</aside>
+
+<main id="centre">
+  <div id="toolbar">
+    <div class="row">
+      <span id="mode" role="tablist">
+        <button id="asgraph" type="button" role="tab" class="on">graph</button>
+        <button id="aslist" type="button" role="tab">list</button>
+      </span>
+      <span id="browse" class="row" hidden>
+        <select id="listkind" aria-label="kind to list"></select>
+        <input id="listq" type="search" placeholder="name, branch or path holds…" aria-label="filter the list">
+        <span id="listnote" class="soft"></span>
+      </span>
+    </div>
+    <div class="kinds"><span class="cap">nodes</span><span id="nodekinds"></span></div>
+    <div class="kinds"><span class="cap">edges</span><span id="edgekinds"></span></div>
+    <div class="row">
+      <button id="fit" type="button">fit</button>
+      <button id="relayout" type="button" title="place the nodes again from scratch">relayout</button>
+      <label><input id="focus" type="checkbox" disabled> only the hits' neighbourhood</label>
+      <label>limit <input id="limit" type="number" min="0" step="500" value="0" title="0 draws the whole bank; a number draws that many nodes, highest degree first"></label>
+      <button id="whole" type="button" hidden>the whole bank</button>
+      <span id="graphnote"></span>
+    </div>
+  </div>
+  <div id="stage">
+    <canvas id="graph"></canvas>
+    <div id="table" hidden></div>
+    <div id="legend">
+      <span><i class="dot seed"></i>seed</span>
+      <span><i class="dot text"></i>text hit</span>
+      <span><i class="dot reach"></i>reached through the graph</span>
+    </div>
+  </div>
+</main>
+
+<aside id="right"><div id="node"><p class="empty">Select a node.</p></div></aside>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

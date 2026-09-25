@@ -1,0 +1,6 @@
+{"timestamp":"2026-01-02T11:00:00.000Z","ordinal":1,"type":"session_meta","payload":{"id":"bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb","cwd":"/repo/app","source":"exec","git":{}}}
+{"timestamp":"2026-01-02T11:00:01.000Z","ordinal":2,"type":"event_msg","payload":{"type":"item_completed","turn_id":"t1","item":{"type":"UserMessage","id":"u1","content":[{"type":"text","text":"rename the package"},{"type":"local_image","path":"/tmp/x.png"}]}}}
+{"timestamp":"2026-01-02T11:00:02.000Z","ordinal":3,"type":"event_msg","payload":{"type":"item_completed","turn_id":"t1","item":{"type":"Reasoning","id":"r1","summary_text":["SECRET REASONING"]}}}
+{"timestamp":"2026-01-02T11:00:03.000Z","ordinal":4,"type":"event_msg","payload":{"type":"item_completed","turn_id":"t1","item":{"type":"CommandExecution","id":"e1","command":["ls"],"aggregated_output":"TOOL OUTPUT"}}}
+{"timestamp":"2026-01-02T11:00:04.000Z","ordinal":5,"type":"event_msg","payload":{"type":"item_completed","turn_id":"t1","item":{"type":"FileChange","id":"f1","status":"completed","changes":{"/repo/app/pkg.go":{"type":"update","unified_diff":"DIFF BODY","move_path":null}}}}}
+{"timestamp":"2026-01-02T11:00:05.000Z","ordinal":6,"type":"event_msg","payload":{"type":"item_completed","turn_id":"t1","item":{"type":"AgentMessage","id":"m1","phase":"final","content":[{"type":"Text","text":"Renamed."}]}}}
