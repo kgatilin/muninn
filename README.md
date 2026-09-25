@@ -1,13 +1,19 @@
 # muninn
 
-Local memory for coding agents and for your own notes. muninn indexes text that
-lives elsewhere (markdown folders, source code, Claude Code and Codex sessions,
-anything a connector can stream) as one graph, and searches it: BM25 plus
-embeddings, fused, then personalized PageRank over the graph's edges.
+**Project memory for coding agents, built from what is already on disk.**
 
-One Go binary, no server to run. Search is a CLI call that prints for an
-agent's context window, so an agent needs no MCP setup to use it: one line in
-its instructions is enough.
+A project's knowledge is spread over its code, its docs and hundreds of
+Claude Code and Codex sessions. The sessions hold the most, and nothing reads
+them again. That is where the user explained why the importer retries only
+once, rejected a design, or corrected the agent for the third time about how
+commit messages are written. The next session starts from zero. It greps the
+code, finds *what* the code does and not *why*, and repeats the mistake the
+last one was corrected for.
+
+muninn indexes all of it (code, docs, notes and every agent conversation) into
+one searchable graph on your machine. An agent asks it before it greps. It gets
+back the design doc, the function, the conversation turn where the decision
+was made, and the rules the user has already stated, in one answer.
 
 ```
 $ muninn search app "why does the importer retry on 409"
@@ -27,10 +33,55 @@ $ muninn search app "why does the importer retry on 409"
   Retry an import batch at most once on 409 and log the lease id.
 ```
 
-`~` marks a hit the graph walk reached rather than the text match. Here the
-conversation turn that changed `lease.go` comes up through its `edits` edge.
+Hit 3 did not match the query's words. The graph walk reached it: that reply
+edited `lease.go`, and `lease.go` matched. `~` marks such hits.
 
-The name is Odin's raven of memory.
+## What it gives you
+
+- **Agents stop repeating corrections.** muninn reads the conversations and
+  pulls out the rules the user gave ("never edit `bank.yaml` by hand", "one
+  commit per logical change") and the decisions about what the system is meant
+  to do. Each rule links to the passages that state it and is rewritten when a
+  later one says otherwise. `muninn rules app "<task>"` before a piece of work
+  returns the ones that apply.
+- **The "why" is next to the "what".** Each agent reply is tied to the files it
+  read and edited. A search that finds a function also brings up the discussion
+  that changed it. A search that finds a discussion brings up the code and the
+  design doc of the same ticket.
+- **Nothing to remember to save.** Memory tools that agents write to hold only
+  what an agent chose to write down. muninn reads the sources as they already
+  are: session logs, the repo, a notes folder. It re-indexes them incrementally,
+  on demand or every few minutes.
+- **Answers sized for a context window.** Output is grouped by class (guides,
+  code, tests, talk, rules), and each class is ranked on its own. A
+  thousand chat turns cannot push the one design doc off the list. Each hit is
+  a `path:lines` locator and a one-line snippet, and the agent opens only what
+  it needs.
+- **Local and cheap by default.** One Go binary, an index in
+  `~/.muninn`, embeddings from a local Ollama model. Hosted models (OpenAI,
+  Gemini, Vertex, Anthropic) are optional. Every paid call is logged, and
+  `muninn usage` shows what it cost.
+- **No server or MCP setup.** It is a CLI. One paragraph in `CLAUDE.md` or
+  `AGENTS.md` is the whole integration, and it works the same for any agent
+  that can run a shell command.
+- **Any source.** A connector is any program that prints JSON lines of nodes and
+  edges. Files, Claude Code and Codex come built in. A wiki export, a ticket
+  tracker or a chat log is a script in whatever language is at hand.
+
+## Where it fits
+
+| | finds | misses |
+|---|---|---|
+| grep / code search | the exact text | why it is so, anything said in a conversation |
+| a vector store over docs (RAG) | passages close to the question | how passages relate: which talk changed which file |
+| agent-written memory files | what an agent decided to save | everything it did not |
+| **muninn** | text, meaning and the links between code, docs and talk | only what no source holds |
+
+Under the hood: BM25 and embeddings fused by reciprocal rank, then personalized
+PageRank over the graph, so relevance flows along edges from the direct
+matches. An optional LLM stage adds entities through a gate that measures the
+graph and rejects writes that would tie everything to everything. The name is
+Odin's raven of memory.
 
 ## Install
 
